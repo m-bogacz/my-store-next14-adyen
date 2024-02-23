@@ -1,5 +1,7 @@
-import { clientAdyen } from "@/api/adyen/client";
+import { ProductsEnity } from "@/types/types";
+import { getCartPrice } from "@/utils/getFormatPrice";
 import { CheckoutAPI, Client, Config } from "@adyen/api-library";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const config = new Config({
@@ -12,7 +14,10 @@ const client = new Client({
 });
 
 export async function POST(request: NextRequest) {
-  console.log("request => ", request);
+  const price = getCartPrice(
+    cookies().get("cart")?.value as unknown as ProductsEnity
+  );
+
   // console.log(request.headers.);
   // request.body
   // const orders = await cookies().get("cart")?.value;
@@ -31,7 +36,7 @@ export async function POST(request: NextRequest) {
       process.env.MERCHANT_ACCOUNT_ADYEN || "MyStoreNext14Adyen853ECOM",
     amount: {
       currency: "PLN",
-      value: 1000,
+      value: price,
     },
     countryCode: "PL",
     reference: process.env.REFERENCE_SESSIONS_ADYEN || "853",

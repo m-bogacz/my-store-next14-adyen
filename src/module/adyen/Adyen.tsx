@@ -19,11 +19,8 @@ export const Adyen = async () => {
     });
 
   return (
-    <div>
+    <div className="border flex border-slate-300 flex-2 w-28 h-32">
       <PaymentContainer config={config} />
-      <button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-2 transform rounded-b-sm m-5 transition-transform rounded-md p-5 hover:scale-105">
-        checkout
-      </button>
     </div>
   );
 };

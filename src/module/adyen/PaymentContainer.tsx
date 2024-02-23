@@ -39,10 +39,5 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
     initAdyen();
   }, [config, paymentContainer]);
 
-  return (
-    <>
-      <div ref={paymentContainer}></div>
-      <div>PaymentContainer</div>
-    </>
-  );
+  return <div ref={paymentContainer}></div>;
 };
