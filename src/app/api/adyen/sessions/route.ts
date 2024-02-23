@@ -1,3 +1,4 @@
+import { getCartFromCookies } from "@/app/actions";
 import { ProductsEnity } from "@/types/types";
 import { getCartPrice } from "@/utils/getFormatPrice";
 import { CheckoutAPI, Client, Config } from "@adyen/api-library";
@@ -14,9 +15,8 @@ const client = new Client({
 });
 
 export async function POST(request: NextRequest) {
-  const price = getCartPrice(
-    cookies().get("cart")?.value as unknown as ProductsEnity
-  );
+  const cart = getCartFromCookies();
+  const price = getCartPrice(cart as unknown as ProductsEnity);
 
   // console.log(request.headers.);
   // request.body

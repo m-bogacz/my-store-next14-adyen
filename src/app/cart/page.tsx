@@ -28,7 +28,7 @@ export default async function Cart() {
           />
         ))}
       </section>
-      <div className="min-w-min w-96 max-w-md min-h-screen">
+      <div className="w-96 max-w-md min-h-screen">
         <Adyen />
       </div>
     </main>
