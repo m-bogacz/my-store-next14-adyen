@@ -12,7 +12,7 @@ const APP_URL =
   process.env.APP_URL ?? "https://my-store-next14-adyen.vercel.app";
 
 export const PaymentContainer = ({ config }: PaymentContainerProps) => {
-  const paymentContainer = useRef<HTMLDivElement | null>(null);
+  //   const paymentContainer = document.getElementById("paymentContainer");
 
   console.log("paymentContainer", config);
 
@@ -33,17 +33,17 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
         },
       });
 
-      if (paymentContainer.current) {
-        checkout.create("dropin").mount(paymentContainer.current);
-      }
+      //   if (paymentContainer.current) {
+      checkout.create("dropin").mount("#paymentContainer");
+      //   }
 
       initAdyen();
     };
-  }, [config, config.id, config.sessionData]);
+  }, [config]);
 
   return (
     <>
-      <div ref={paymentContainer}></div>
+      <div id="paymentContainer"></div>
       <div>PaymentContainer</div>
     </>
   );
