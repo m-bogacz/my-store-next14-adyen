@@ -7,12 +7,12 @@ const config = new Config({
     "AQEwhmfuXNWTK0Qc+iSdi1csqPaeZo5VGcIeeWFPw3bzyzXG7MU4HzpiVTNo0rU9BaJ0EMFdWw2+5HzctViMSCJMYAc=-1/cIx4H/HWIp9oI6v5zIxPp+eTa7Zv+Rut14bAXiECw=-rCMW5xvyc9pgr??T",
   environment: "TEST",
 });
+const client = new Client({
+  config,
+});
 
-export async function POST(request: NextRequest, res: NextResponse) {
+export async function POST(request: NextRequest) {
   console.log("request => ", request);
-  const client = new Client({
-    config,
-  });
   // console.log(request.headers.);
   // request.body
   // const orders = await cookies().get("cart")?.value;

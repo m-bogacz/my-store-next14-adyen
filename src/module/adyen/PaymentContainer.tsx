@@ -18,9 +18,7 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
       console.log("init adyen");
       const checkout = await AdyenCheckout({
         environment: "test",
-        clientKey:
-          process.env.NEXT_PUBLIC_CLIENT_KEY_ADYEN ??
-          "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",
+        clientKey: process.env.NEXT_PUBLIC_CLIENT_KEY_ADYEN,
         session: {
           id: config.id,
           sessionData: config.sessionData, // The payment session data.
