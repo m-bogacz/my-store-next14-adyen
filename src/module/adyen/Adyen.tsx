@@ -8,6 +8,9 @@ export const Adyen = async () => {
     `https://my-store-next14-adyen.vercel.app/api/adyen/sessions`,
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
   ).then((response) => {
     return response.json();
