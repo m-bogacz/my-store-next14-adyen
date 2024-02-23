@@ -4,9 +4,12 @@ import "@adyen/adyen-web/dist/adyen.css";
 import { PaymentContainer } from "./PaymentContainer";
 
 export const Adyen = async () => {
-  const config = await fetch(`${process.env.APP_URL}/api/adyen/sessions`, {
-    method: "POST",
-  }).then((response) => {
+  const config = await fetch(
+    `https://my-store-next14-adyen.vercel.app/api/adyen/sessions`,
+    {
+      method: "POST",
+    }
+  ).then((response) => {
     return response.json();
   });
 
