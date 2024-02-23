@@ -15,8 +15,8 @@ const client = new Client({
 });
 
 export async function POST(request: NextRequest) {
-  const cart = getCartFromCookies();
-  const price = getCartPrice(cart as unknown as ProductsEnity);
+  // const cart = getCartFromCookies();
+  // const price = getCartPrice(cart as unknown as ProductsEnity);
 
   // console.log(request.headers.);
   // request.body
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       process.env.MERCHANT_ACCOUNT_ADYEN || "MyStoreNext14Adyen853ECOM",
     amount: {
       currency: "PLN",
-      value: price,
+      value: 1400,
     },
     countryCode: "PL",
     reference: process.env.REFERENCE_SESSIONS_ADYEN || "853",
