@@ -8,22 +8,17 @@ interface PaymentContainerProps {
   config: any;
 }
 
-const APP_URL =
-  process.env.APP_URL ?? "https://my-store-next14-adyen.vercel.app";
-
 export const PaymentContainer = ({ config }: PaymentContainerProps) => {
-  //   const paymentContainer = document.getElementById("paymentContainer");
+  const paymentContainer = useRef<HTMLDivElement | null>(null);
 
   console.log("paymentContainer", config);
 
   useEffect(() => {
     const initAdyen = async () => {
+      console.log("init adyen");
       const checkout = await AdyenCheckout({
         environment: "test",
-
-        clientKey:
-          process.env.CLIENT_KEY_ADYEN ??
-          "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",
+        clientKey: process.env.NEXT_PUBLIC_CLIENT_KEY_ADYEN,
         session: {
           id: config.id,
           sessionData: config.sessionData, // The payment session data.
@@ -31,23 +26,23 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
         onPaymentCompleted: (result, component) => {
           console.info(result, component);
         },
+        onError: (error) => {
+          console.error(error);
+        },
       });
 
-      //   if (paymentContainer.current) {
-      checkout.create("dropin").mount("#paymentContainer");
-      //   }
-
-      initAdyen();
+      if (paymentContainer.current) {
+        checkout.create("dropin").mount(paymentContainer.current);
+      }
     };
-  }, [config]);
+
+    initAdyen();
+  }, [config, paymentContainer]);
 
   return (
     <>
-      <div id="paymentContainer"></div>
+      <div ref={paymentContainer}></div>
       <div>PaymentContainer</div>
     </>
   );
 };
-
-// ??
-//   "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",

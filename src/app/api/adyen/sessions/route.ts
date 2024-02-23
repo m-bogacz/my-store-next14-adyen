@@ -1,20 +1,23 @@
 import { clientAdyen } from "@/api/adyen/client";
-import { CheckoutAPI, Client } from "@adyen/api-library";
+import { CheckoutAPI, Client, Config } from "@adyen/api-library";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+const config = new Config({
+  apiKey:
+    "AQEwhmfuXNWTK0Qc+iSdi1csqPaeZo5VGcIeeWFPw3bzyzXG7MU4HzpiVTNo0rU9BaJ0EMFdWw2+5HzctViMSCJMYAc=-1/cIx4H/HWIp9oI6v5zIxPp+eTa7Zv+Rut14bAXiECw=-rCMW5xvyc9pgr??T",
+  environment: "TEST",
+});
+
+export async function POST(request: NextRequest, res: NextResponse) {
   console.log("request => ", request);
-  const clientAdyen = new Client({
-    apiKey:
-      process.env.API_KEY_ADYEN ??
-      "AQEwhmfuXNWTK0Qc+iSdi1csqPaeZo5VGcIeeWFPw3bzyzXG7MU4HzpiVTNo0rU9BaJ0EMFdWw2+5HzctViMSCJMYAc=-VvDyLa9c1lGR8IJXj/hIAkftDOXOhjNsBEbSVA3qFtg=-PxUJ5HY;N7hKxUNu",
-    environment: "TEST",
+  const client = new Client({
+    config,
   });
   // console.log(request.headers.);
   // request.body
   // const orders = await cookies().get("cart")?.value;
 
-  const checkout = new CheckoutAPI(clientAdyen);
+  const checkout = new CheckoutAPI(client);
 
   // if (process.env.MERCHANT_ACCOUNT_ADYEN) {
   //   throw new Error("MERCHANT_ACCOUNT_ADYEN is not defined");
