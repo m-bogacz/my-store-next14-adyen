@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
       console.log("response", response);
       return response;
     })
-    .catch((error) => {
-      console.log("error =>", error);
+    .catch((err) => {
+      console.error(`Error: ${err.message}, error code: ${err.errorCode}`);
     });
 
   return NextResponse.json(response);

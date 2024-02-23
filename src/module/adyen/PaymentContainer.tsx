@@ -17,13 +17,13 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
   console.log("paymentContainer", config);
 
   useEffect(() => {
-    let ignore = false;
-
     const initAdyen = async () => {
       const checkout = await AdyenCheckout({
         environment: "test",
 
-        clientKey: process.env.CLIENT_KEY_ADYEN,
+        clientKey:
+          process.env.CLIENT_KEY_ADYEN ??
+          "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",
         session: {
           id: config.id,
           sessionData: config.sessionData, // The payment session data.
@@ -33,15 +33,11 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
         },
       });
 
-      if (paymentContainer.current && !ignore) {
+      if (paymentContainer.current) {
         checkout.create("dropin").mount(paymentContainer.current);
       }
 
       initAdyen();
-
-      return () => {
-        ignore = true;
-      };
     };
   }, [config, config.id, config.sessionData]);
 
