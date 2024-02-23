@@ -12,7 +12,9 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
       const checkout = await AdyenCheckout({
         environment: "test",
 
-        clientKey: process.env.CLIENT_KEY_ADYEN ?? "",
+        clientKey:
+          process.env.CLIENT_KEY_ADYEN ??
+          "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",
         session: {
           id: config.id,
           sessionData: config.sessionData, // The payment session data.
