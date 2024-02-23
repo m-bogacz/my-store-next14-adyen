@@ -1,20 +1,29 @@
 "use client";
 import AdyenCheckout from "@adyen/adyen-web";
-import React, { useEffect } from "react";
+import "@adyen/adyen-web/dist/adyen.css";
+
+import React, { useEffect, useRef } from "react";
 
 interface PaymentContainerProps {
   config: any;
 }
 
+const APP_URL =
+  process.env.APP_URL ?? "https://my-store-next14-adyen.vercel.app";
+
 export const PaymentContainer = ({ config }: PaymentContainerProps) => {
+  const paymentContainer = useRef<HTMLDivElement | null>(null);
+
+  console.log("paymentContainer", config);
+
   useEffect(() => {
+    let ignore = false;
+
     const initAdyen = async () => {
       const checkout = await AdyenCheckout({
         environment: "test",
 
-        clientKey:
-          process.env.CLIENT_KEY_ADYEN ??
-          "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",
+        clientKey: process.env.CLIENT_KEY_ADYEN,
         session: {
           id: config.id,
           sessionData: config.sessionData, // The payment session data.
@@ -23,12 +32,26 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
           console.info(result, component);
         },
       });
-      checkout.create("dropin").mount("#dropin-container");
-    };
 
-    initAdyen();
+      if (paymentContainer.current && !ignore) {
+        checkout.create("dropin").mount(paymentContainer.current);
+      }
+
+      initAdyen();
+
+      return () => {
+        ignore = true;
+      };
+    };
   }, [config, config.id, config.sessionData]);
 
-  console.log("config adyen =>", config);
-  return <div id="dropin-container">PaymentContainer</div>;
+  return (
+    <>
+      <div ref={paymentContainer}></div>
+      <div>PaymentContainer</div>
+    </>
+  );
 };
+
+// ??
+//   "test_EXV25GBNCZDHRCZSGIZG7EORRMMACP46",
