@@ -1,6 +1,16 @@
 import { clientAdyen } from "@/api/adyen/client";
-import { hmacValidator, CheckoutAPI } from "@adyen/api-library";
-import { cookies } from "next/headers";
+import { CheckoutAPI } from "@adyen/api-library";
+import { NextRequest, NextResponse } from "next/server";
+
+export const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS(req: NextRequest) {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
 
 export async function POST(request: Request) {
   // const orders = await cookies().get("cart")?.value;
@@ -30,5 +40,5 @@ export async function POST(request: Request) {
     return response;
   });
 
-  return Response.json(response);
+  return Response.json(response, { headers: corsHeaders });
 }
