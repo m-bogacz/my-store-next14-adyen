@@ -1,8 +1,15 @@
 import { clientAdyen } from "@/api/adyen/client";
-import { CheckoutAPI } from "@adyen/api-library";
+import { CheckoutAPI, Client } from "@adyen/api-library";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  console.log("request => ", request);
+  const clientAdyen = new Client({
+    apiKey:
+      process.env.API_KEY_ADYEN ??
+      "AQEwhmfuXNWTK0Qc+iSdi1csqPaeZo5VGcIeeWFPw3bzyzXG7MU4HzpiVTNo0rU9BaJ0EMFdWw2+5HzctViMSCJMYAc=-VvDyLa9c1lGR8IJXj/hIAkftDOXOhjNsBEbSVA3qFtg=-PxUJ5HY;N7hKxUNu",
+    environment: "TEST",
+  });
   // console.log(request.headers.);
   // request.body
   // const orders = await cookies().get("cart")?.value;
@@ -26,10 +33,8 @@ export async function POST(request: NextRequest) {
     countryCode: "PL",
     reference: process.env.REFERENCE_SESSIONS_ADYEN || "853",
     returnUrl: "https://my-store-next14-adyen.vercel.app" + "/success",
-    shopperLocale: "pl-PL",
   })
     .then((response) => {
-      console.log("response", response);
       return response;
     })
     .catch((err) => {
