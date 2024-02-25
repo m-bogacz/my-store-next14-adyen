@@ -19,7 +19,7 @@ export const Adyen = async () => {
     });
 
   return (
-    <div className="border flex border-slate-300 flex-2 w-28 h-32">
+    <div className="flex flex-2">
       <PaymentContainer config={config} />
     </div>
   );
