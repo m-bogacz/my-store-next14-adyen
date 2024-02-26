@@ -17,7 +17,7 @@ export default async function Cart() {
   }
 
   return (
-    <main className="flex flex-col md:flex-row md:m-20 gap-10 md:gap-0 justify-around md:justify-normal">
+    <main className="flex flex-col md:flex-row md:m-20 gap-10 justify-around md:justify-normal">
       <section className="flex flex-col md:items-start  items-center gap-5 ">
         {cart.items.map((product) => (
           <ShopingCartItem
