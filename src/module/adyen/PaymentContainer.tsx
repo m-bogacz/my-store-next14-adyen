@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import AdyenCheckout from "@adyen/adyen-web";
+
 import { env } from "@/env";
 import "@adyen/adyen-web/dist/adyen.css";
 

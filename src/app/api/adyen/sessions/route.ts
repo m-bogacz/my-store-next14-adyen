@@ -21,7 +21,7 @@ export async function POST() {
     },
     countryCode: "PL",
     reference: env.REFERENCE_SESSIONS_ADYEN,
-    returnUrl: env.NEXT_PUBLIC_APP_URL + "/success",
+    returnUrl: env.NEXT_PUBLIC_APP_URL,
     channel: Types.checkout.PaymentSetupRequest.ChannelEnum.Web,
     shopperLocale: "pl-PL",
   })
@@ -31,8 +31,6 @@ export async function POST() {
     .catch((err) => {
       console.error(`Error: ${err.message}, error code: ${err.errorCode}`);
     });
-
-  console.log("response", response);
 
   return NextResponse.json(response);
 }
