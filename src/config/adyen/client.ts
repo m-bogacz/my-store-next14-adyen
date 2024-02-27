@@ -1,8 +1,11 @@
-import { Client } from "@adyen/api-library";
+import { Client, Config } from "@adyen/api-library";
+import { env } from "@/env";
+
+const config = new Config({
+  apiKey: env.API_KEY_ADYEN,
+  environment: "TEST",
+});
 
 export const clientAdyen = new Client({
-  apiKey:
-    process.env.API_KEY_ADYEN ??
-    "AQEwhmfuXNWTK0Qc+iSdi1csqPaeZo5VGcIeeWFPw3bzyzXG7MU4HzpiVTNo0rU9BaJ0EMFdWw2+5HzctViMSCJMYAc=-VvDyLa9c1lGR8IJXj/hIAkftDOXOhjNsBEbSVA3qFtg=-PxUJ5HY;N7hKxUNu sdasdas",
-  environment: "TEST",
+  config,
 });

@@ -1,7 +1,8 @@
+import { env } from "@/env";
 import { hmacValidator } from "@adyen/api-library";
 
 export async function POST(request: Request) {
-  const hmacKey = process.env.HMAC_VERIFY_KEY ?? "";
+  const hmacKey = env.HMAC_VERIFY_KEY;
   const validator = new hmacValidator();
 
   console.log("validator", validator);

@@ -1,8 +1,8 @@
 "use client";
-import AdyenCheckout from "@adyen/adyen-web";
-import "@adyen/adyen-web/dist/adyen.css";
-
 import React, { useEffect, useRef } from "react";
+import AdyenCheckout from "@adyen/adyen-web";
+import { env } from "@/env";
+import "@adyen/adyen-web/dist/adyen.css";
 
 interface PaymentContainerProps {
   config: any;
@@ -18,10 +18,10 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
       console.log("init adyen");
       const checkout = await AdyenCheckout({
         environment: "test",
-        clientKey: process.env.NEXT_PUBLIC_CLIENT_KEY_ADYEN,
+        clientKey: env.NEXT_PUBLIC_CLIENT_KEY_ADYEN,
         session: {
           id: config.id,
-          sessionData: config.sessionData, // The payment session data.
+          sessionData: config.sessionData,
         },
         onPaymentCompleted: (result, component) => {
           console.info(result, component);
