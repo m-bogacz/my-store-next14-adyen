@@ -1,10 +1,17 @@
 import { clientAdyen } from "@/config/adyen/client";
+import { loadEnvConfig } from "@next/env";
 import { env } from "@/env";
 import { CheckoutAPI, Types } from "@adyen/api-library";
 import { NextResponse } from "next/server";
 
+loadEnvConfig(process.cwd());
+
 export async function POST() {
   const checkout = new CheckoutAPI(clientAdyen);
+
+  console.log("clientAdyen", clientAdyen);
+  console.log("env.MERCHANT_ACCOUNT_ADYEN", env.MERCHANT_ACCOUNT_ADYEN);
+  console.log("env.NEXT_PUBLIC_APP_URL", env.NEXT_PUBLIC_APP_URL);
 
   if (env.MERCHANT_ACCOUNT_ADYEN) {
     throw new Error("MERCHANT_ACCOUNT_ADYEN is not defined");
@@ -31,6 +38,8 @@ export async function POST() {
     .catch((err) => {
       console.error(`Error: ${err.message}, error code: ${err.errorCode}`);
     });
+
+  console.log("response", response);
 
   return NextResponse.json(response);
 }

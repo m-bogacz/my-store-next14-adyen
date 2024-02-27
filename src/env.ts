@@ -11,7 +11,7 @@ export const env = createEnv({
     REFERENCE_SESSIONS_ADYEN: z.string().min(1),
   },
   client: {
-    NEXT_PUBLIC_APP_URL: z.string().min(1),
+    NEXT_PUBLIC_APP_URL: z.string().url(),
     NEXT_PUBLIC_CLIENT_KEY_ADYEN: z.string().min(1),
   },
 
