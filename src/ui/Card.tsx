@@ -5,7 +5,9 @@ import { AddToCartButton } from "./AddToCart";
 import { addProductToCart } from "@/api/cart/cartApi";
 
 interface CardProps {
-  image: string;
+  image: {
+    url: string;
+  };
   name: string;
   price: number;
 }
@@ -14,14 +16,14 @@ export const Card = ({ image, name, price }: CardProps) => {
   async function addToCartAction() {
     "use server";
 
-    await addProductToCart({ image, name, price, quantity: 1 });
+    await addProductToCart({ image: image.url, name, price, quantity: 1 });
   }
 
   return (
     <div className="border-slate-300 rounded-sm border flex flex-col justify-center items-center cursor-pointer">
       <div className="overflow-hidden p-5  ">
         <Image
-          src={image}
+          src={image.url}
           alt={name}
           width={150}
           height={200}
