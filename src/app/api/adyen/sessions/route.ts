@@ -13,13 +13,6 @@ export async function POST() {
   console.log("env.MERCHANT_ACCOUNT_ADYEN", env.MERCHANT_ACCOUNT_ADYEN);
   console.log("env.NEXT_PUBLIC_APP_URL", env.NEXT_PUBLIC_APP_URL);
 
-  if (env.MERCHANT_ACCOUNT_ADYEN) {
-    throw new Error("MERCHANT_ACCOUNT_ADYEN is not defined");
-  }
-  if (env.REFERENCE_SESSIONS_ADYEN) {
-    throw new Error("REFERENCE_SESSIONS_ADYEN is not defined");
-  }
-
   const response = await checkout.PaymentsApi.sessions({
     merchantAccount: env.MERCHANT_ACCOUNT_ADYEN,
     amount: {
