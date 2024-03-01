@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Price } from "./Price";
 import { AddToCartButton } from "./AddToCart";
-import { addProductToCart } from "@/api/cart/cartApi";
+import { addProductToCart, initOrFetchCart } from "@/api/cart/api";
 
 interface CardProps {
   image: {
@@ -10,13 +10,14 @@ interface CardProps {
   };
   name: string;
   price: number;
+  id: string;
 }
 
-export const Card = ({ image, name, price }: CardProps) => {
+export const Card = ({ image, name, price, id }: CardProps) => {
   async function addToCartAction() {
     "use server";
-
-    await addProductToCart({ image: image.url, name, price, quantity: 1 });
+    const cart = await initOrFetchCart();
+    await addProductToCart(id, cart);
   }
 
   return (

@@ -1,3 +1,4 @@
+import { env } from "@/env";
 import { type TypedDocumentString } from "@/gql/graphql";
 
 export async function executeGraphql<TResult, TVariables>({
@@ -15,11 +16,11 @@ export async function executeGraphql<TResult, TVariables>({
 } & (TVariables extends { [key: string]: never }
   ? { variables?: never }
   : { variables: TVariables })): Promise<TResult> {
-  if (!process.env.GRAPHQL_URL) {
+  if (!env.GRAPHQL_URL) {
     throw TypeError("GRAPHQL_URL is not defined");
   }
 
-  const res = await fetch(process.env.GRAPHQL_URL, {
+  const res = await fetch(env.GRAPHQL_URL, {
     method: "POST",
     body: JSON.stringify({
       query,
@@ -29,7 +30,7 @@ export async function executeGraphql<TResult, TVariables>({
     next,
     headers: {
       ...headers,
-      Authorization: `Bearer ${process.env.PERMANENT_AUTH_TOKEN}`,
+      Authorization: `Bearer ${env.PERMANENT_AUTH_TOKEN}`,
       "Content-Type": "application/json",
     },
   });

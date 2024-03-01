@@ -1,6 +1,5 @@
 import { Card } from "@/ui/Card";
-
-import { getProducts } from "@/api/products/getProducts";
+import { getProducts } from "@/api/products/query/getProducts";
 
 export default async function Home() {
   const products = await getProducts();

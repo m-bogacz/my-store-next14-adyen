@@ -4,13 +4,15 @@ import { getCartFromCookies } from "../actions";
 import { redirect } from "next/navigation";
 import { ShopingCartItem } from "@/ui/ShopingCartItem";
 import { Adyen } from "@/module/adyen/Adyen";
+import { getCart } from "@/api/cart/api";
 
 interface Carts {
   items: Product[];
 }
 
 export default async function Cart() {
-  const cart = (await getCartFromCookies()) as unknown as ProductsEnity;
+  const cart = await getCart();
+  console.log(cart);
 
   if (!cart) {
     redirect("/");
@@ -19,12 +21,13 @@ export default async function Cart() {
   return (
     <main className="flex flex-col md:flex-row md:m-20 gap-10 justify-around md:justify-normal">
       <section className="flex flex-col md:items-start  items-center gap-5 ">
-        {cart.items.map((product) => (
+        {cart.orderItem.map((item) => (
           <ShopingCartItem
-            key={product.name}
-            name={product.name}
-            price={product.price}
-            image={product.image}
+            key={item.product?.name ?? ""}
+            name={item.product?.name ?? ""}
+            price={item.product?.price ? item.product.price : 0}
+            image={item.product?.image.url ?? ""}
+            quantity={item.quantity}
           />
         ))}
       </section>

@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 export async function getCartFromCookies() {
-  const cart = cookies().get("cart")?.value;
+  const cart = cookies().get("cartId")?.value;
 
   if (!cart) {
     return null;

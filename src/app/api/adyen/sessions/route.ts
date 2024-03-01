@@ -9,10 +9,6 @@ loadEnvConfig(process.cwd());
 export async function POST() {
   const checkout = new CheckoutAPI(clientAdyen);
 
-  console.log("clientAdyen", clientAdyen);
-  console.log("env.MERCHANT_ACCOUNT_ADYEN", env.MERCHANT_ACCOUNT_ADYEN);
-  console.log("env.NEXT_PUBLIC_APP_URL", env.NEXT_PUBLIC_APP_URL);
-
   const response = await checkout.PaymentsApi.sessions({
     merchantAccount: env.MERCHANT_ACCOUNT_ADYEN,
     amount: {

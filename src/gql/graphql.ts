@@ -1613,6 +1613,7 @@ export type Node = {
 };
 
 export type Order = Entity & Node & {
+  checkoutId?: Maybe<Scalars['String']['output']>;
   /** The time the document was created */
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
@@ -1624,6 +1625,7 @@ export type Order = Entity & Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  orderId?: Maybe<Scalars['Int']['output']>;
   orderItem: Array<OrderItem>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1713,8 +1715,10 @@ export type OrderConnection = {
 };
 
 export type OrderCreateInput = {
+  checkoutId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  orderId?: InputMaybe<Scalars['Int']['input']>;
   orderItem?: InputMaybe<OrderItemCreateManyInlineInput>;
   total?: InputMaybe<Scalars['Int']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1759,7 +1763,7 @@ export type OrderItem = Entity & Node & {
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  quantity?: Maybe<Scalars['Int']['output']>;
+  quantity: Scalars['Int']['output'];
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -1846,7 +1850,7 @@ export type OrderItemCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   order?: InputMaybe<OrderCreateOneInlineInput>;
   product?: InputMaybe<ProductCreateOneInlineInput>;
-  quantity?: InputMaybe<Scalars['Int']['input']>;
+  quantity: Scalars['Int']['input'];
   total: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -2228,6 +2232,25 @@ export type OrderManyWhereInput = {
   OR?: InputMaybe<Array<OrderWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
+  checkoutId?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  checkoutId_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  checkoutId_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  checkoutId_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  checkoutId_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  checkoutId_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  checkoutId_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  checkoutId_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  checkoutId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  checkoutId_starts_with?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2285,6 +2308,21 @@ export type OrderManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  orderId?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  orderId_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  orderId_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  orderId_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  orderId_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  orderId_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  orderId_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  orderId_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   orderItem_every?: InputMaybe<OrderItemWhereInput>;
   orderItem_none?: InputMaybe<OrderItemWhereInput>;
   orderItem_some?: InputMaybe<OrderItemWhereInput>;
@@ -2341,12 +2379,16 @@ export type OrderManyWhereInput = {
 };
 
 export type OrderOrderByInput =
+  | 'checkoutId_ASC'
+  | 'checkoutId_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'email_ASC'
   | 'email_DESC'
   | 'id_ASC'
   | 'id_DESC'
+  | 'orderId_ASC'
+  | 'orderId_DESC'
   | 'publishedAt_ASC'
   | 'publishedAt_DESC'
   | 'total_ASC'
@@ -2355,7 +2397,9 @@ export type OrderOrderByInput =
   | 'updatedAt_DESC';
 
 export type OrderUpdateInput = {
+  checkoutId?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  orderId?: InputMaybe<Scalars['Int']['input']>;
   orderItem?: InputMaybe<OrderItemUpdateManyInlineInput>;
   total?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2378,7 +2422,9 @@ export type OrderUpdateManyInlineInput = {
 };
 
 export type OrderUpdateManyInput = {
+  checkoutId?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  orderId?: InputMaybe<Scalars['Int']['input']>;
   total?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -2441,6 +2487,25 @@ export type OrderWhereInput = {
   OR?: InputMaybe<Array<OrderWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
+  checkoutId?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  checkoutId_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  checkoutId_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  checkoutId_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  checkoutId_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  checkoutId_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  checkoutId_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  checkoutId_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  checkoutId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  checkoutId_starts_with?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2498,6 +2563,21 @@ export type OrderWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  orderId?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  orderId_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  orderId_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  orderId_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  orderId_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  orderId_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  orderId_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  orderId_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   orderItem_every?: InputMaybe<OrderItemWhereInput>;
   orderItem_none?: InputMaybe<OrderItemWhereInput>;
   orderItem_some?: InputMaybe<OrderItemWhereInput>;
@@ -5058,6 +5138,49 @@ export type _SystemDateTimeFieldVariation =
   | 'combined'
   | 'localization';
 
+export type CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateCartMutation = { createOrder?: { id: string } | null };
+
+export type PublishOrderMutationVariables = Exact<{
+  orderId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type PublishOrderMutation = { publishOrder?: { id: string } | null };
+
+export type PublishOrderItemMutationVariables = Exact<{
+  orderItemId: Scalars['ID']['input'];
+}>;
+
+
+export type PublishOrderItemMutation = { publishOrderItem?: { id: string } | null };
+
+export type CartUpsertOrderItemMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
+  quantity: Scalars['Int']['input'];
+  orderItemId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CartUpsertOrderItemMutation = { upsertOrderItem?: { id: string } | null };
+
+export type GetCartByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetCartByIdQuery = { order?: { id: string, orderItem: Array<{ quantity: number, id: string, product?: { id: string, name: string, price: number, image: { url: string } } | null }> } | null };
+
+export type GetProductByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetProductByIdQuery = { product?: { id: string, name: string, price: number, image: { url: string } } | null };
+
 export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5078,6 +5201,68 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const CreateCartDocument = new TypedDocumentString(`
+    mutation createCart {
+  createOrder(data: {}) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<CreateCartMutation, CreateCartMutationVariables>;
+export const PublishOrderDocument = new TypedDocumentString(`
+    mutation PublishOrder($orderId: ID) {
+  publishOrder(where: {id: $orderId}, to: PUBLISHED) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<PublishOrderMutation, PublishOrderMutationVariables>;
+export const PublishOrderItemDocument = new TypedDocumentString(`
+    mutation PublishOrderItem($orderItemId: ID!) {
+  publishOrderItem(where: {id: $orderItemId}, to: PUBLISHED) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<PublishOrderItemMutation, PublishOrderItemMutationVariables>;
+export const CartUpsertOrderItemDocument = new TypedDocumentString(`
+    mutation CartUpsertOrderItem($orderId: ID!, $productId: ID!, $quantity: Int!, $orderItemId: ID) {
+  upsertOrderItem(
+    upsert: {create: {quantity: 1, total: 1, product: {connect: {id: $productId}}, order: {connect: {id: $orderId}}}, update: {quantity: $quantity}}
+    where: {id: $orderItemId}
+  ) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<CartUpsertOrderItemMutation, CartUpsertOrderItemMutationVariables>;
+export const GetCartByIdDocument = new TypedDocumentString(`
+    query getCartById($id: ID) {
+  order(where: {id: $id}) {
+    id
+    orderItem {
+      quantity
+      id
+      product {
+        id
+        name
+        price
+        image {
+          url
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCartByIdQuery, GetCartByIdQueryVariables>;
+export const GetProductByIdDocument = new TypedDocumentString(`
+    query GetProductById($id: ID) {
+  product(where: {id: $id}) {
+    id
+    name
+    price
+    image {
+      url
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetProductByIdQuery, GetProductByIdQueryVariables>;
 export const GetProductsDocument = new TypedDocumentString(`
     query GetProducts {
   products {
