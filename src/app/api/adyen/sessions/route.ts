@@ -2,18 +2,32 @@ import { clientAdyen } from "@/config/adyen/client";
 import { loadEnvConfig } from "@next/env";
 import { env } from "@/env";
 import { CheckoutAPI, Types } from "@adyen/api-library";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getCart } from "@/api/cart/api";
 
 loadEnvConfig(process.cwd());
 
 export async function POST() {
+  const cart = await getCart();
+
+  if (!cart) {
+    return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
+  }
+
+  const total = cart.orderItem.reduce((acc, item) => {
+    if (!item.product) {
+      return 0;
+    }
+    return acc + item.product.price * item.quantity;
+  }, 0);
+
   const checkout = new CheckoutAPI(clientAdyen);
 
   const response = await checkout.PaymentsApi.sessions({
     merchantAccount: env.MERCHANT_ACCOUNT_ADYEN,
     amount: {
       currency: "PLN",
-      value: 1400,
+      value: total,
     },
     countryCode: "PL",
     reference: env.REFERENCE_SESSIONS_ADYEN,
@@ -29,4 +43,16 @@ export async function POST() {
     });
 
   return NextResponse.json(response);
+}
+
+export async function GET(request: NextRequest) {
+  const cartId = request.cookies.get("cartId")?.value;
+  console.log(cartId);
+  return new NextResponse(JSON.stringify({ cartId }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "set-cookie": `cartId=${cartId}; HttpOnly; Path=/; SameSite=Lax`,
+    },
+  });
 }

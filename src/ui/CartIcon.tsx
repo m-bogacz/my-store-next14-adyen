@@ -7,8 +7,8 @@ export const CartIcon = ({ count }: { count: number }) => {
     <div className="cursor-pointer relative">
       <Link href="/cart">
         <Image src="/assets/cart.png" alt="logo" width={40} height={40} />
-        <div className="absolute  top-6 left-0 border-2 border-slate-600 p-1 w-5 h-5 flex items-center justify-center rounded-full">
-          <span className="text-slate-600 text-sm font-bold">{count}</span>
+        <div className="absolute  top-[-5px] right-0 bg-slate-700 w-5 h-5 flex items-center justify-center rounded-full">
+          <span className="text-white text-sm font-semibold">{count}</span>
         </div>
       </Link>
     </div>

@@ -25,7 +25,7 @@ export const initOrFetchCart = async () => {
   if (!newCart) {
     throw new Error("Cart not created");
   }
-  cookies().set("cartId", newCart);
+  cookies().set("cartId", newCart, { httpOnly: true });
   return newCart;
 };
 

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function OPTIONS(request: Request) {
   const allowedOrigin = request.headers.get("origin");
@@ -14,4 +14,16 @@ export async function OPTIONS(request: Request) {
   });
 
   return response;
+}
+
+export async function GET(request: NextRequest) {
+  const cartId = request.cookies.get("cartId")?.value;
+  console.log(cartId);
+  return new NextResponse(JSON.stringify({ cartId }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "set-cookie": `cartId=${cartId}; HttpOnly; Path=/; SameSite=Lax`,
+    },
+  });
 }

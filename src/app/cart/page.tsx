@@ -12,8 +12,6 @@ interface Carts {
 
 export default async function Cart() {
   const cart = await getCart();
-  console.log(cart);
-
   if (!cart) {
     redirect("/");
   }
@@ -31,9 +29,11 @@ export default async function Cart() {
           />
         ))}
       </section>
-      <div className="max-w-sm md:max-w-md">
-        <Adyen />
-      </div>
+      <article className="flex items-center justify-center">
+        <section className="max-w-[22rem] md:max-w-md">
+          <Adyen />
+        </section>
+      </article>
     </main>
   );
 }
