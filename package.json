@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev-https": "next dev --experimental-https",
+    "dev-adyen": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

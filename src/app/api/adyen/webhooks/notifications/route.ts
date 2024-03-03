@@ -16,8 +16,8 @@ export async function POST(request: NextRequest, response: Response) {
     body.notificationItems[0].NotificationRequestItem.eventCode ===
       "AUTHORISATION"
   ) {
-    console.log("success", body);
-    cookies().delete("cartId");
+    console.log("success", body.notificationItems);
+    cookies().set("cartId", "");
   }
   // console.log("request", request);
   console.log(
