@@ -1,13 +1,15 @@
 // import { env } from "@/env";
 // import { hmacValidator } from "@adyen/api-library";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Body } from "./types";
 import { cookies } from "next/headers";
 
-export async function POST(request: NextRequest, response: Response) {
+export async function POST(request: NextRequest) {
   const body = (await request.json()) as Body;
   // const hmacKey = env.HMAC_VERIFY_KEY;
   // const validator = new hmacValidator();
+
+  let response = NextResponse.next();
 
   // console.log("validator", validator);
   // console.log("hmacKey", hmacKey);
@@ -17,13 +19,14 @@ export async function POST(request: NextRequest, response: Response) {
       "AUTHORISATION"
   ) {
     console.log("success", body.notificationItems);
-    cookies().set("cartId", "");
+    response.cookies.delete("cartId");
   }
   // console.log("request", request);
   console.log(
     "test request",
     body.notificationItems[0].NotificationRequestItem.success
   );
+  // cookies().delete("cartId");
 
-  return Response.json({ status: 200 });
+  return NextResponse.json({ status: 200 });
 }
