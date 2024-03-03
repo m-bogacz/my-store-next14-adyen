@@ -44,15 +44,3 @@ export async function POST() {
 
   return NextResponse.json(response);
 }
-
-export async function GET(request: NextRequest) {
-  const cartId = request.cookies.get("cartId")?.value;
-  console.log(cartId);
-  return new NextResponse(JSON.stringify({ cartId }), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-      "set-cookie": `cartId=${cartId}; HttpOnly; Path=/; SameSite=Lax`,
-    },
-  });
-}
