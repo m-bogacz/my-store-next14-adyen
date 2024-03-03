@@ -9,6 +9,6 @@ export async function POST(request: NextRequest) {
   // console.log("validator", validator);
   // console.log("hmacKey", hmacKey);
 
-  console.log("request", request.body);
+  console.log("request", request.json());
   return Response.json({ status: 200 });
 }
