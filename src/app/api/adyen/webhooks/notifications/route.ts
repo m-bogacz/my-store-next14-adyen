@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
   ) {
     console.log("success", body.notificationItems);
     response.cookies.delete("cartId");
+    NextResponse.redirect(new URL("/new", request.nextUrl));
   }
   // console.log("request", request);
   console.log(
