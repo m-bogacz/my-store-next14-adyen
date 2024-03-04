@@ -1,15 +1,17 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AdyenCheckout from "@adyen/adyen-web";
 import { env } from "@/env";
 import "@adyen/adyen-web/dist/adyen.css";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 interface PaymentContainerProps {
   config: any;
 }
 
 export const PaymentContainer = ({ config }: PaymentContainerProps) => {
+  const router = useRouter();
   const paymentContainer = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -23,9 +25,13 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
           id: config.id,
           sessionData: config.sessionData,
         },
-        onPaymentCompleted: (result, component) => {
-          console.log(result, component);
-          redirect(config.returnUrl);
+        onPaymentCompleted: (result) => {
+          if (result.resultCode === "Authorised") {
+            router.push(
+              `/cart/success?resultCode=${result.resultCode}?id=${config.id}`
+            );
+            revalidatePath("/");
+          }
         },
         onError: (error) => {
           console.error(error);
@@ -38,7 +44,7 @@ export const PaymentContainer = ({ config }: PaymentContainerProps) => {
     };
 
     initAdyen();
-  }, [config, paymentContainer]);
+  }, [config, paymentContainer, router]);
 
   return <div ref={paymentContainer}></div>;
 };

@@ -6,12 +6,9 @@ import { ShopingCartItem } from "@/ui/ShopingCartItem";
 import { Adyen } from "@/module/adyen/Adyen";
 import { getCart } from "@/api/cart/api";
 
-interface Carts {
-  items: Product[];
-}
-
 export default async function Cart() {
   const cart = await getCart();
+
   if (!cart) {
     redirect("/");
   }
@@ -19,7 +16,7 @@ export default async function Cart() {
   return (
     <main className="flex flex-col md:flex-row md:m-20 gap-10 justify-around md:justify-normal">
       <section className="flex flex-col md:items-start  items-center gap-5 ">
-        {cart.orderItem.map((item) => (
+        {cart?.orderItem.map((item) => (
           <ShopingCartItem
             key={item.product?.name ?? ""}
             name={item.product?.name ?? ""}
